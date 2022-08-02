@@ -1,10 +1,15 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-function login({ setSignedUp }) {
+function Login({ setSignedUp }) {
     const [clicked, setClicked] = useState(false)
-    const [loggedIn, setLoggedIn] = useState(false)
     const [user, setUser] = useState(null)
+
+    const [loggedIn, setLoggedIn] = useState(localStorage.getItem('loggedIn'))
+
+    useEffect(() => {
+        localStorage.setItem('loggedIn', loggedIn)
+    }, [loggedIn])
 
 
     function getCookie(name) {
@@ -53,7 +58,9 @@ function login({ setSignedUp }) {
         event.preventDefault()
         axios.post('/logout').then((response) => {
             console.log('response from server: ', response)
+            setLoggedIn('false')
             whoAmI()
+            // window.location.reload()
         })
     }
 
@@ -67,6 +74,10 @@ function login({ setSignedUp }) {
     useEffect(() => {
         whoAmI()
     }, [])
+
+    useEffect(() => {
+        console.log(loggedIn)
+    }, [loggedIn])
 
     return (
         <div>
@@ -103,7 +114,7 @@ function login({ setSignedUp }) {
             </form>
 
             {
-                loggedIn &&
+                loggedIn !== 'false' && loggedIn !== null &&
                 <button onClick={logOut}>
                     Logout
                 </button>
@@ -112,4 +123,4 @@ function login({ setSignedUp }) {
     )
 }
 
-export default login
+export default Login

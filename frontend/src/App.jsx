@@ -1,25 +1,21 @@
-import { useState } from 'react'
 import './App.css'
-import axios from 'axios'
-import Signup from './components/Signup'
-import Login from './components/Login'
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import GamePage from './pages/GamePage';
+import { useEffect, useState } from 'react'
 
 function App() {
-
-  // Display signin form or login form
-  const [signedup, setSignedUp] = useState(false)
 
 
   return (
     <div className="App">
-      <h1>Rock, Paper, Scissors</h1>
-      <hr />
+      <Router>
+        <Routes>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/rps' element={<GamePage />} />
 
-      {
-        signedup ? <Signup setSignedUp={setSignedUp} />
-          : <Login setSignedUp={setSignedUp} />
-      }
-
+        </Routes>
+      </Router>
 
     </div>
   )

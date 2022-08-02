@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 
 
-function signup({ setSignedUp }) {
+function Signup({ setSignedUp }) {
 
 
     const handleSubmit = (event) => {
@@ -24,6 +24,7 @@ function signup({ setSignedUp }) {
         }).then((response) => {
             console.log(response.data)
             setSignedUp(true)
+            window.location.reload()
             // in here, you can do whatever you want...
             // reload the page, send them to another page, etc.
         })
@@ -56,4 +57,4 @@ function signup({ setSignedUp }) {
     )
 }
 
-export default signup
+export default Signup
