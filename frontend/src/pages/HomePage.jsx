@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 
 function HomePage() {
     const [gameExists, setGameExists] = useState(false)
+    const [gameID, setGameID] = useState(0)
 
 
     function getCookie(name) {
@@ -42,8 +43,10 @@ function HomePage() {
             victoryNumber: victoryNumber,
             totalThrows: totalThrows,
         }).then((response) => {
-            console.log('response from server: ', response)
+            console.log('response from server: ', response.data)
+
             setGameExists(true)
+            setGameID(response.gameID)
 
             document.getElementById("total-throws").value = ""
             document.getElementById("victory-num").value = ""
@@ -69,7 +72,7 @@ function HomePage() {
                     ? <div>
                         <p>A game exists!</p>
                         <button>
-                            <Link to={'/game'}>
+                            <Link to={`/game/${gameID}`}>
                                 Start new game!
                             </Link>
                         </button>

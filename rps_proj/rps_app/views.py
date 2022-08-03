@@ -89,8 +89,31 @@ def start_new_game(request):
     total_throws = request.data['totalThrows']
 
     try:
-        Game.objects.create(victory_num=victory_num, total_throws=total_throws)        
+        game = Game.objects.create(victory_num=victory_num, total_throws=total_throws)   
     except Exception as e:
         print(str(e))
 
-    return JsonResponse({'data': 'best {victory_num} out of {total_throws}!'})
+    return JsonResponse({'gameID': game.id})
+
+
+@api_view(['GET'])
+def play_game(request, game_id):
+    # print(dir(request))
+    # print(dir(request._request))
+    
+
+    game = None
+    try:
+        # game_id = request.data['gameID']
+        game = Game.objects.get(id=game_id)
+        print(game)
+        data = {
+            'victory_num': game.victory_num,
+            'total_throws': game.total_throws
+        }
+        return JsonResponse(data=data)
+    except Exception as e:
+        print(str(e))
+
+    # return JsonResponse({'game': game})
+    return JsonResponse({'game': None})
