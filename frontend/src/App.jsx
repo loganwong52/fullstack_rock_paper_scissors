@@ -1,5 +1,6 @@
 import './App.css'
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import UserAuthPage from './pages/UserAuthPage';
 import HomePage from './pages/HomePage';
 import GamePage from './pages/GamePage';
 import { useEffect, useState } from 'react'
@@ -11,8 +12,9 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/rps' element={<GamePage />} />
+          <Route path='/' element={<UserAuthPage />} />
+          <Route path='/home' element={<HomePage />} />
+          <Route path='/game' element={<GamePage />} />
 
         </Routes>
       </Router>

@@ -1,15 +1,10 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 
-function Login({ setSignedUp }) {
+function Login({ setSignedUp, setShowGameLink }) {
     const [clicked, setClicked] = useState(false)
     const [user, setUser] = useState(null)
-
-    const [loggedIn, setLoggedIn] = useState(localStorage.getItem('loggedIn'))
-
-    useEffect(() => {
-        localStorage.setItem('loggedIn', loggedIn)
-    }, [loggedIn])
+    const [loggedIn, setLoggedIn] = useState(false)
 
 
     function getCookie(name) {
@@ -31,6 +26,7 @@ function Login({ setSignedUp }) {
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken
 
 
+    // Actual Login frontend stuff
     const handleLogin = (event) => {
         event.preventDefault()
 
@@ -49,8 +45,25 @@ function Login({ setSignedUp }) {
         }).then((response) => {
             console.log('response from server: ', response)
             setLoggedIn(true)
-            window.location.reload()
-            // redirect to Rock paper Scissors later...
+
+            let nameInput = document.getElementById("name-input")
+            nameInput.value = ""
+            let emailInput = document.getElementById("email-input")
+            emailInput.value = ""
+            let pwInput = document.getElementById("password-input")
+            pwInput.value = ""
+
+            // provide link to the Home page
+            setShowGameLink(true)
+
+        }).catch((error) => {
+            console.log("There was an error in your input: ", error)
+            let nameInput = document.getElementById("name-input")
+            nameInput.value = ""
+            let emailInput = document.getElementById("email-input")
+            emailInput.value = ""
+            let pwInput = document.getElementById("password-input")
+            pwInput.value = ""
         })
     }
 
@@ -58,7 +71,8 @@ function Login({ setSignedUp }) {
         event.preventDefault()
         axios.post('/logout').then((response) => {
             console.log('response from server: ', response)
-            setLoggedIn('false')
+            setLoggedIn(false)
+            setShowGameLink(false)
             whoAmI()
             // window.location.reload()
         })
@@ -81,44 +95,49 @@ function Login({ setSignedUp }) {
 
     return (
         <div>
-            <h2>LOGIN:</h2>
-            <form onSubmit={handleLogin} >
-                <label>
-                    Name:
-                    <input type="text" name="name" />
-                </label>
-                <br />
-                <label>
-                    Email:
-                    <input type="text" name="email" />
-                </label>
-                <br />
-                <label>
-                    Password:
-                    <input type="password" name="password" />
-                </label>
-                <br />
-                <input type="submit" value="Submit" />
-
-                <br />
-                <br />
-                {
-                    !clicked &&
-                    <button onClick={() => {
-                        setClicked(true)
-                        setSignedUp(true)
-                    }}>
-                        New User? Sign up!
-                    </button>
-                }
-            </form>
-
             {
-                loggedIn !== 'false' && loggedIn !== null &&
-                <button onClick={logOut}>
-                    Logout
-                </button>
+                loggedIn
+                    ?
+                    <button onClick={logOut}>
+                        Logout
+                    </button>
+                    :
+                    <div>
+                        <h2>LOGIN:</h2>
+                        <form onSubmit={handleLogin} >
+                            <label>
+                                Name:
+                                <input id="name-input" type="text" name="name" />
+                            </label>
+                            <br />
+                            <label>
+                                Email:
+                                <input id="email-input" type="text" name="email" />
+                            </label>
+                            <br />
+                            <label>
+                                Password:
+                                <input id="password-input" type="password" name="password" />
+                            </label>
+                            <br />
+                            <input type="submit" value="Submit" />
+
+                            <br />
+                            <br />
+                            {
+                                !clicked &&
+                                <button onClick={() => {
+                                    setClicked(true)
+                                    setSignedUp(true)
+                                }}>
+                                    New User? Sign up!
+                                </button>
+                            }
+                        </form>
+                    </div>
             }
+
+
         </div>
     )
 }
