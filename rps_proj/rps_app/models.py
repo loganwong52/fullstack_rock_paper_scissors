@@ -15,8 +15,8 @@ class Throw(models.Model):
     throw = models.CharField(max_length=8, validators=[validate_throw])
 
 class Game(models.Model):
-    victory_num = models.IntegerField(validators=[MinValueValidator(3)])
-    win_condition = models.IntegerField(default=0)
+    victory_num = models.IntegerField(validators=[MinValueValidator(2)], default=2)
+    total_throws = models.IntegerField(validators=[MinValueValidator(3)], default=3)
 
 class AppUser(AbstractUser):
     email = models.EmailField(

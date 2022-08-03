@@ -27,7 +27,9 @@ function UserAuthPage() {
             <br />
             {
                 showGameLink
-                    ? <Link to={'/home'}>Go to the Home Page!</Link>
+                    ? <button>
+                        <Link to={'/home'}>Go to the Home Page!</Link>
+                    </button>
                     : ''
             }
         </div>

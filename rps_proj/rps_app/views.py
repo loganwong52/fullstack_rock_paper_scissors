@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from .models import AppUser as User
 from rest_framework.decorators import api_view
 from django.core import serializers
+from .models import Throw, Game
 
 # Create your views here.
 
@@ -76,3 +77,20 @@ def who_am_i(request):
         return HttpResponse(data)
     else:
         return JsonResponse({'user':None})
+
+
+@api_view(['POST'])
+def start_new_game(request):
+    print(dir(request))
+    print(dir(request._request))
+
+    # DRF assumes that the body is JSON, and automatically parses it into a dictionary at request.data
+    victory_num = request.data['victoryNumber']
+    total_throws = request.data['totalThrows']
+
+    try:
+        Game.objects.create(victory_num=victory_num, total_throws=total_throws)        
+    except Exception as e:
+        print(str(e))
+
+    return JsonResponse({'data': 'best {victory_num} out of {total_throws}!'})
