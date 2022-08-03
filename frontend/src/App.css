@@ -31,3 +31,19 @@ input[type=submit]:hover {
   padding-left: 10px;
   padding-right: 10px;
 }
+
+.pokemon-button {
+  text-align: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.poke-button-desc {
+  margin: 0px;
+}
+
+img {
+  height: 175px;
+  width: auto;
+
+}

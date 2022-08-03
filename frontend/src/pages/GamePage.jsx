@@ -24,6 +24,9 @@ function GamePage() {
     const [computerThrows, setComputerThrows] = useState(0)
 
 
+
+
+
     // on mount, axios get the game, given the ID
     useEffect(() => {
         axios.get(`/game/${gameID}`).then((response) => {
