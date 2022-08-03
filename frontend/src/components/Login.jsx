@@ -3,8 +3,10 @@ import { useState, useEffect } from 'react'
 
 function Login({ setSignedUp, setShowGameLink }) {
     const [clicked, setClicked] = useState(false)
-    const [user, setUser] = useState(null)
+    const [user, setUser] = useState(undefined)
     const [loggedIn, setLoggedIn] = useState(false)
+
+    const [displayFailedLogin, setDisplayFailedLogin] = useState(false)
 
 
     function getCookie(name) {
@@ -45,18 +47,21 @@ function Login({ setSignedUp, setShowGameLink }) {
         }).then((response) => {
             console.log('response from server: ', response)
             setLoggedIn(true)
+            setDisplayFailedLogin(false)
 
-            let nameInput = document.getElementById("name-input")
-            nameInput.value = ""
-            let emailInput = document.getElementById("email-input")
-            emailInput.value = ""
-            let pwInput = document.getElementById("password-input")
-            pwInput.value = ""
+            // // successful Login -> clear the input boxes!
+            // let nameInput = document.getElementById("name-input")
+            // nameInput.value = ""
+            // let emailInput = document.getElementById("email-input")
+            // emailInput.value = ""
+            // let pwInput = document.getElementById("password-input")
+            // pwInput.value = ""
 
             // provide link to the Home page
             setShowGameLink(true)
 
         }).catch((error) => {
+            // unsuccessful Login -> clear input boxes, display message!
             console.log("There was an error in your input: ", error)
             let nameInput = document.getElementById("name-input")
             nameInput.value = ""
@@ -64,6 +69,8 @@ function Login({ setSignedUp, setShowGameLink }) {
             emailInput.value = ""
             let pwInput = document.getElementById("password-input")
             pwInput.value = ""
+
+            setDisplayFailedLogin(true)
         })
     }
 
@@ -93,6 +100,13 @@ function Login({ setSignedUp, setShowGameLink }) {
         console.log(loggedIn)
     }, [loggedIn])
 
+    useEffect(() => {
+        console.log(user)
+        if (user !== null && user !== undefined) {
+            setLoggedIn(true)
+        }
+    }, [user])
+
     return (
         <div>
             {
@@ -104,6 +118,10 @@ function Login({ setSignedUp, setShowGameLink }) {
                     :
                     <div>
                         <h2>LOGIN:</h2>
+                        {
+                            displayFailedLogin &&
+                            <h2>Your email or password was incorrect!</h2>
+                        }
                         <form onSubmit={handleLogin} >
                             <label>
                                 Name:

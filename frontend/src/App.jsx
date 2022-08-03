@@ -3,7 +3,6 @@ import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import UserAuthPage from './pages/UserAuthPage';
 import HomePage from './pages/HomePage';
 import GamePage from './pages/GamePage';
-import { useEffect, useState } from 'react'
 
 function App() {
 

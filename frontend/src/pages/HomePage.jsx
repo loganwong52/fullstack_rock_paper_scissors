@@ -1,8 +1,8 @@
 import axios from 'axios'
-import Signup from '../components/Signup'
-import Login from '../components/Login'
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import '../App.css'
+import CreateGame from '../components/CreateGame'
+import StartGame from '../components/StartGame'
 
 function HomePage() {
     const [gameExists, setGameExists] = useState(false)
@@ -32,21 +32,34 @@ function HomePage() {
     const handleSubmit = (event) => {
         event.preventDefault()
 
-        let victoryNumber = event.target[1].value
-        let totalThrows = event.target[0].value
-
         // get the user input
-        console.log("NEW GAME INPUT: ", victoryNumber, totalThrows)
+        let victoryNumber = parseInt(event.target[0].value)
+        let totalThrows = parseInt(event.target[1].value)
+
+        console.log("totalThrows: ", totalThrows)
+        console.log("win condition: ", victoryNumber)
         console.dir(event.target)
+
+        if (totalThrows <= 0 || victoryNumber <= 0) {
+            console.log('Neither total throws or victory condition can be less than or equal to zero!')
+            alert('Neither total throws or victory condition can be less than or equal to zero!')
+            return null
+        }
+
+        if (totalThrows < victoryNumber) {
+            console.log(`Total throws(${totalThrows}) can't be less than the win condition(${victoryNumber})`)
+            alert(`Total throws(${totalThrows}) can't be less than the win condition(${victoryNumber})`)
+            return null
+        }
 
         axios.post('/home', {
             victoryNumber: victoryNumber,
             totalThrows: totalThrows,
         }).then((response) => {
-            console.log('response from server: ', response.data)
+            console.log('response.data.gameID: ', response.data.gameID)
 
             setGameExists(true)
-            setGameID(response.gameID)
+            setGameID(response.data.gameID)
 
             document.getElementById("total-throws").value = ""
             document.getElementById("victory-num").value = ""
@@ -58,7 +71,6 @@ function HomePage() {
             document.getElementById("victory-num").value = ""
         })
 
-
         return null
     }
 
@@ -69,35 +81,11 @@ function HomePage() {
 
             {
                 gameExists
-                    ? <div>
-                        <p>A game exists!</p>
-                        <button>
-                            <Link to={`/game/${gameID}`}>
-                                Start new game!
-                            </Link>
-                        </button>
-
-                    </div>
-                    : <div>
-                        <form onSubmit={handleSubmit}>
-                            <label>
-                                Enter total number of throws to play:
-                                <input id="total-throws" type="text" name="name" />
-                            </label>
-                            <br />
-                            <br />
-                            <label>
-                                Enter number of throws to win:
-                                <input id="victory-num" type="text" name="email" />
-                            </label>
-                            <br />
-                            <br />
-                            <input type="submit" value="Submit" />
-                        </form>
-                    </div>
+                    ? <StartGame gameID={gameID} />
+                    : <CreateGame handleSubmit={handleSubmit} />
             }
 
-        </div>
+        </div >
     )
 }
 

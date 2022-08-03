@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 
 function Signup({ setSignedUp }) {
@@ -53,6 +54,10 @@ function Signup({ setSignedUp }) {
                 <br />
                 <input type="submit" value="Submit" />
             </form>
+
+            <button onClick={() => { setSignedUp(false) }}>
+                Go back to Login
+            </button>
         </div>
     )
 }

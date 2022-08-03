@@ -1,4 +1,3 @@
-import axios from 'axios'
 import Signup from '../components/Signup'
 import Login from '../components/Login'
 import { useState } from 'react'
@@ -19,19 +18,17 @@ function UserAuthPage() {
             <hr />
 
             {
+                showGameLink
+                    ? <button>
+                        <Link to={'/home'}>Start a new game!</Link>
+                    </button>
+                    : ''
+            }
+            {
                 signedup ? <Signup setSignedUp={setSignedUp} />
                     : <Login setSignedUp={setSignedUp} setShowGameLink={setShowGameLink} />
             }
 
-            <br />
-            <br />
-            {
-                showGameLink
-                    ? <button>
-                        <Link to={'/home'}>Go to the Home Page!</Link>
-                    </button>
-                    : ''
-            }
         </div>
     )
 }

@@ -1,4 +1,3 @@
-from random import choices
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import *            # import built-in Django Validators
@@ -10,6 +9,7 @@ def validate_throw(user_input):
     valid_throws = ["rock", "paper", "scissors"]
     if user_input not in valid_throws:
         raise ValidationError(text(f"{user_input} is not a valid throw. It should be rock, paper, or scissors"))
+
 
 class Throw(models.Model):
     throw = models.CharField(max_length=8, validators=[validate_throw])
