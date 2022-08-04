@@ -38,7 +38,7 @@ function HomePage() {
 
         console.log("totalThrows: ", totalThrows)
         console.log("win condition: ", victoryNumber)
-        console.dir(event.target)
+        // console.dir(event.target)
 
         if (totalThrows <= 0 || victoryNumber <= 0) {
             console.log('Neither total throws or victory condition can be less than or equal to zero!')
@@ -56,7 +56,7 @@ function HomePage() {
             victoryNumber: victoryNumber,
             totalThrows: totalThrows,
         }).then((response) => {
-            console.log('response.data.gameID: ', response.data.gameID)
+            console.log('The gameID: ', response.data.gameID)
 
             setGameExists(true)
             setGameID(response.data.gameID)

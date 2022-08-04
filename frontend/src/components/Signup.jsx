@@ -14,8 +14,7 @@ function Signup({ setSignedUp }) {
         let password = event.target[2].value
         // get the user input
         console.log("SIGNUP SUBMITED: " + name, email, password)
-        console.dir(event.target)
-
+        // console.dir(event.target)
 
         // send the user input to backend
         axios.post('/signup', {
@@ -23,7 +22,7 @@ function Signup({ setSignedUp }) {
             'email': email,
             'password': password,
         }).then((response) => {
-            console.log(response.data)
+            // console.log(response.data)
             setSignedUp(true)
             window.location.reload()
             // in here, you can do whatever you want...

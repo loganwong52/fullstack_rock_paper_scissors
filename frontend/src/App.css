@@ -45,5 +45,8 @@ input[type=submit]:hover {
 img {
   height: 175px;
   width: auto;
+}
 
+h1 {
+  margin: 0px;
 }

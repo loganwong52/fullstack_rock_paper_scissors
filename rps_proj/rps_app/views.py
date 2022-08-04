@@ -81,8 +81,8 @@ def who_am_i(request):
 
 @api_view(['POST'])
 def start_new_game(request):
-    print(dir(request))
-    print(dir(request._request))
+    # print(dir(request))
+    # print(dir(request._request))
 
     # DRF assumes that the body is JSON, and automatically parses it into a dictionary at request.data
     victory_num = request.data['victoryNumber']
@@ -100,7 +100,6 @@ def start_new_game(request):
 def play_game(request, game_id):
     # print(dir(request))
     # print(dir(request._request))
-    
 
     game = None
     try:

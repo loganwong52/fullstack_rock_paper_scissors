@@ -6,7 +6,6 @@ import GamePage from './pages/GamePage';
 
 function App() {
 
-
   return (
     <div className="App">
       <Router>

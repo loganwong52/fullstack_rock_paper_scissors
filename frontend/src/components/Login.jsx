@@ -37,7 +37,7 @@ function Login({ setSignedUp, setShowGameLink }) {
         let password = event.target[2].value
         // get the user input
         console.log("LOGIN SUBMITTED: " + name, email, password)
-        console.dir(event.target)
+        // console.dir(event.target)
 
         axios.post('/login', {
             email: email,
@@ -48,16 +48,6 @@ function Login({ setSignedUp, setShowGameLink }) {
             console.log('response from server: ', response)
             setLoggedIn(true)
             setDisplayFailedLogin(false)
-
-            // // successful Login -> clear the input boxes!
-            // let nameInput = document.getElementById("name-input")
-            // nameInput.value = ""
-            // let emailInput = document.getElementById("email-input")
-            // emailInput.value = ""
-            // let pwInput = document.getElementById("password-input")
-            // pwInput.value = ""
-
-            // provide link to the Home page
             setShowGameLink(true)
 
         }).catch((error) => {
@@ -92,18 +82,22 @@ function Login({ setSignedUp, setShowGameLink }) {
         setUser(user)
     }
 
+    // prints who's logged or undefined if no one
     useEffect(() => {
         whoAmI()
     }, [])
 
+    // prints confirmation if a user is logged in or not
     useEffect(() => {
-        console.log(loggedIn)
+        console.log("A user is logged in: ", loggedIn)
     }, [loggedIn])
 
+    // when a user has logged in, set logged in state to true
     useEffect(() => {
-        console.log(user)
+        // console.log(user)
         if (user !== null && user !== undefined) {
             setLoggedIn(true)
+            setShowGameLink(true)
         }
     }, [user])
 
