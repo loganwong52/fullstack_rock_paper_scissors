@@ -2,11 +2,9 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import '../App.css'
 import CreateGame from '../components/CreateGame'
-import StartGame from '../components/StartGame'
 import { useNavigate } from "react-router-dom"
 
 function HomePage() {
-    const [gameExists, setGameExists] = useState(false)
     const [gameID, setGameID] = useState(0)
 
 
@@ -34,7 +32,6 @@ function HomePage() {
 
     const handleSubmit = (event) => {
         event.preventDefault()
-
 
         // get the user input
         let victoryNumber = parseInt(event.target[0].value)
@@ -67,8 +64,6 @@ function HomePage() {
             totalThrows: totalThrows,
         }).then((response) => {
             console.log('The gameID: ', response.data.gameID)
-
-            setGameExists(true)
             setGameID(response.data.gameID)
 
             document.getElementById("total-throws").value = ""
