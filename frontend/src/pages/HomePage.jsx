@@ -1,8 +1,9 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import '../App.css'
 import CreateGame from '../components/CreateGame'
 import StartGame from '../components/StartGame'
+import { useNavigate } from "react-router-dom"
 
 function HomePage() {
     const [gameExists, setGameExists] = useState(false)
@@ -28,9 +29,12 @@ function HomePage() {
     axios.defaults.headers.common['X-CSRFToken'] = csrftoken
 
 
+    // this is for redirecting to the GamePage when user has created a game
+    let navigate = useNavigate()
 
     const handleSubmit = (event) => {
         event.preventDefault()
+
 
         // get the user input
         let victoryNumber = parseInt(event.target[0].value)
@@ -39,6 +43,12 @@ function HomePage() {
         console.log("totalThrows: ", totalThrows)
         console.log("win condition: ", victoryNumber)
         // console.dir(event.target)
+
+        if (isNaN(totalThrows) || isNaN(victoryNumber)) {
+            console.log('Input is empty.')
+            alert('Please enter numbers!')
+            return null
+        }
 
         if (totalThrows <= 0 || victoryNumber <= 0) {
             console.log('Neither total throws or victory condition can be less than or equal to zero!')
@@ -74,16 +84,19 @@ function HomePage() {
         return null
     }
 
+    // when gameID has been updated, AKA the user has created a game, redirect to the GamePage
+    useEffect(() => {
+        if (gameID !== 0) {
+            navigate(`/game/${gameID}`)
+        }
+    }, [gameID])
+
     return (
         <div>
             <h1>Start a new game!</h1>
             <hr />
 
-            {
-                gameExists
-                    ? <StartGame gameID={gameID} />
-                    : <CreateGame handleSubmit={handleSubmit} />
-            }
+            <CreateGame handleSubmit={handleSubmit} />
 
         </div >
     )
