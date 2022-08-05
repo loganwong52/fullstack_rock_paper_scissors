@@ -96,12 +96,13 @@ function GamePage() {
 
 
     // when playerThrows and computerThrows are both updated, print!
+    // OR if the first throw is a TIE, since the playerThrows & computerThrows might not be updated
     useEffect(() => {
         console.log("Player's throws won: ", playerThrows)
         console.log("Computer's  throws won: ", computerThrows)
 
         // once you or computer has 1 point, display throws!
-        if (playerThrows > 0 || computerThrows > 0) {
+        if (roundWinner === "TIE!" || playerThrows > 0 || computerThrows > 0) {
             setGameHasStarted(true)
         }
 
@@ -109,7 +110,7 @@ function GamePage() {
             setSomeoneWon(true)
         }
 
-    }, [playerThrows, computerThrows])
+    }, [roundWinner, playerThrows, computerThrows])
 
 
     return (
