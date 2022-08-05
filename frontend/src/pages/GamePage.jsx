@@ -13,6 +13,9 @@ function GamePage() {
     const [totalThrows, setTotalThrows] = useState(3)
     const [victoryNum, setVictoryNum] = useState(2)
 
+    // computer's choices
+    const computerChoices = ['ROCK', 'PAPER', 'SCISSORS']
+
     // string that keeps track of player's & computer's throws: either ROCK, PAPER, or SCISSORS
     const [playerRPS, setPlayerRPS] = useState('')
     const [computerRPS, setComputerRPS] = useState('')
@@ -27,6 +30,56 @@ function GamePage() {
 
     // boolean that determines whether to show throws or not
     const [gameHasStarted, setGameHasStarted] = useState(false)
+
+
+    // When a button is pressed, determines who wins the throw, or if it's a TIE
+    function handleThrow(userThrow) {
+        console.log("Player's throw: ", userThrow)
+        setPlayerRPS(userThrow)
+
+        // computer throws ROCK, PAPER, OR SCISSORS
+        let choice = Math.floor(Math.random() * 3)
+        let computerThrow = computerChoices[choice]
+        console.log("computer choice: ", computerThrow)
+        setComputerRPS(computerThrow)
+
+        // determine who wins!
+        if (userThrow === computerThrow) {
+            console.log("TIE!")
+            setRoundWinner("TIE!")
+
+        } else if (userThrow === "ROCK" && computerThrow === "SCISSORS") {
+            console.log("Player wins!")
+            setPlayerThrows(playerThrows + 1)
+            setRoundWinner("You won this round!")
+
+        } else if (userThrow === "ROCK" && computerThrow === "PAPER") {
+            console.log("Computer wins!")
+            setComputerThrows(computerThrows + 1)
+            setRoundWinner("The computer won this round!")
+
+        } else if (userThrow === "PAPER" && computerThrow === "SCISSORS") {
+            console.log("Computer wins!")
+            setComputerThrows(computerThrows + 1)
+            setRoundWinner("The computer won this round!")
+
+        } else if (userThrow === "PAPER" && computerThrow === "ROCK") {
+            console.log("Player wins!")
+            setPlayerThrows(playerThrows + 1)
+            setRoundWinner("You won this round!")
+
+        } else if (userThrow === "SCISSORS" && computerThrow === "ROCK") {
+            console.log("Computer wins!")
+            setComputerThrows(computerThrows + 1)
+            setRoundWinner("The computer won this round!")
+
+        } else if (userThrow === "SCISSORS" && computerThrow === "PAPER") {
+            console.log("Player wins!")
+            setPlayerThrows(playerThrows + 1)
+            setRoundWinner("You won this round!")
+
+        }
+    }
 
 
     // on mount, axios get the game, given the ID
@@ -81,17 +134,8 @@ function GamePage() {
 
 
             {someoneWon
-                ? <ShowVictory playerThrows={playerThrows} victoryNum={victoryNum} computerThrows={computerThrows} setGameHasStarted={setGameHasStarted} />
-                :
-                <PlayerThrowButtons
-                    setPlayerRPS={setPlayerRPS}
-                    playerThrows={playerThrows}
-                    setComputerRPS={setComputerRPS}
-                    setPlayerThrows={setPlayerThrows}
-                    setComputerThrows={setComputerThrows}
-                    computerThrows={computerThrows}
-                    setRoundWinner={setRoundWinner}
-                />
+                ? <ShowVictory playerThrows={playerThrows} victoryNum={victoryNum} computerThrows={computerThrows} />
+                : <PlayerThrowButtons handleThrow={handleThrow} />
             }
 
         </div>

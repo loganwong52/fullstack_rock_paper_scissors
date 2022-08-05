@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-function ShowVictory({ playerThrows, victoryNum, computerThrows, setGameHasStarted }) {
+function ShowVictory({ playerThrows, victoryNum, computerThrows }) {
     // state value for cat image URL
     const [catImageUrl, setCatImageUrl] = useState('')
 

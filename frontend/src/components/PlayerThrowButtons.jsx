@@ -2,64 +2,11 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 
-function PlayerThrowButtons({ setPlayerRPS, playerThrows, setComputerRPS, setPlayerThrows, setComputerThrows, computerThrows, setRoundWinner }) {
-    // computer's choices
-    const computerChoices = ['ROCK', 'PAPER', 'SCISSORS']
-
+function PlayerThrowButtons({ handleThrow }) {
     // image urls
     const [rockImageUrl, setRockImageUrl] = useState('')
     const [paperImageUrl, setPaperImageUrl] = useState('')
     const [scissorsImageUrl, setScissorsImageUrl] = useState('')
-
-    // Determines who wins the throw, or if it's a TIE
-    function handleThrow(userThrow) {
-        console.log("Player's throw: ", userThrow)
-        setPlayerRPS(userThrow)
-
-        // computer throws ROCK, PAPER, OR SCISSORS
-        let choice = Math.floor(Math.random() * 3)
-        let computerThrow = computerChoices[choice]
-        console.log("computer choice: ", computerThrow)
-        setComputerRPS(computerThrow)
-
-        // determine who wins!
-        if (userThrow === computerThrow) {
-            console.log("TIE!")
-            setRoundWinner("TIE!")
-
-        } else if (userThrow === "ROCK" && computerThrow === "SCISSORS") {
-            console.log("Player wins!")
-            setPlayerThrows(playerThrows + 1)
-            setRoundWinner("You won this round!")
-
-        } else if (userThrow === "ROCK" && computerThrow === "PAPER") {
-            console.log("Computer wins!")
-            setComputerThrows(computerThrows + 1)
-            setRoundWinner("The computer won this round!")
-
-        } else if (userThrow === "PAPER" && computerThrow === "SCISSORS") {
-            console.log("Computer wins!")
-            setComputerThrows(computerThrows + 1)
-            setRoundWinner("The computer won this round!")
-
-        } else if (userThrow === "PAPER" && computerThrow === "ROCK") {
-            console.log("Player wins!")
-            setPlayerThrows(playerThrows + 1)
-            setRoundWinner("You won this round!")
-
-        } else if (userThrow === "SCISSORS" && computerThrow === "ROCK") {
-            console.log("Computer wins!")
-            setComputerThrows(computerThrows + 1)
-            setRoundWinner("The computer won this round!")
-
-        } else if (userThrow === "SCISSORS" && computerThrow === "PAPER") {
-            console.log("Player wins!")
-            setPlayerThrows(playerThrows + 1)
-            setRoundWinner("You won this round!")
-
-        }
-    }
-
 
     // POKEMON IMAGE AXIOS STUFF
     // pokemon API: https://pokeapi.co/
@@ -88,8 +35,8 @@ function PlayerThrowButtons({ setPlayerRPS, playerThrows, setComputerRPS, setPla
         } catch (error) {
             console.error('Error occurred fetching data: ', error)
         }
-
     }
+
 
     // on mount, get the images for the buttons
     useEffect(() => {
