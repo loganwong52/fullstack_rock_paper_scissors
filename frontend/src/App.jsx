@@ -4,6 +4,7 @@ import UserAuthPage from './pages/UserAuthPage';
 import HomePage from './pages/HomePage';
 import GamePage from './pages/GamePage';
 
+// This is comment to test git on my new laptop.
 function App() {
 
   return (
