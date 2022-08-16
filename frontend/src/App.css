@@ -36,6 +36,7 @@ input[type=submit]:hover {
   text-align: center;
   justify-content: center;
   padding: 10px;
+  background-color: lightblue;
 }
 
 .poke-button-desc {
@@ -43,8 +44,8 @@ input[type=submit]:hover {
 }
 
 img {
-  height: 175px;
-  width: auto;
+  height: 15rem;
+  width: 15rem;
 }
 
 h1 {

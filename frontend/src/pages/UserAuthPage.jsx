@@ -16,7 +16,7 @@ function UserAuthPage() {
 
     return (
         <div>
-            <h1>Rock, Paper, Scissors</h1>
+            <h1>Pokemon Themed <br />Rock, Paper, Scissors</h1>
             <hr />
 
             {

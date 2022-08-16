@@ -14,7 +14,8 @@ function PlayerThrowButtons({ handleThrow }) {
         try {
             // get the sprite URL
             const jsonResponse = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-            let spriteUrl = jsonResponse.data.sprites.front_default
+            console.log(jsonResponse.data.sprites.other)
+            let spriteUrl = jsonResponse.data.sprites.other['official-artwork'].front_default
 
             // depending on the name, set appropiate state
             if (pokemonName === 'geodude') {
